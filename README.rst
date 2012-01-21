@@ -1,5 +1,5 @@
-================
-Django Analytics
-================
+======================
+Django Analytics Admin
+======================
 
-Provide an analytics interface for django admin.
+Provide an analytics service in Django admin.
