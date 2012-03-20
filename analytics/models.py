@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.utils.translation import ugettext as _
+from djangotoolbox.fields import DictField
 
 class Log(models.Model):
     """ A log message, used by DatabaseHandler """
@@ -41,3 +42,23 @@ class Log(models.Model):
     def short_message(self, max_length=100):
         return self.message if len(self.message) <= max_length else (u'%s...' % self.message[:max_length])
     short_message.short_description = _('short message')
+
+
+class Event(models.Model):
+    """ An event like Google Anlytics """
+
+    category = models.CharField(_('category'), max_length=30, db_index=True)
+    action = models.CharField(_('action'), max_length=30, db_index=True)
+    label = models.CharField(_('label'), max_length=30, blank=True, null=True, db_index=True)
+    parameters = DictField()
+
+    created_at  = models.DateTimeField(_('created_at'), auto_now_add=True, db_index=True)
+    updated_at  = models.DateTimeField(_('updated_at'), auto_now=True)
+
+    class Meta:
+        verbose_name = 'event'
+        verbose_name_plural = 'events'
+        get_latest_by = 'created_at'
+
+    def __unicode__(self):
+        return u'Event %s' % self.id

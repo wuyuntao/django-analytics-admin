@@ -1,1 +1,1 @@
-# Create your views here.
+# -*- coding: UTF-8 -*-
